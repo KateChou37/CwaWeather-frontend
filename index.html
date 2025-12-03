@@ -78,6 +78,33 @@
             border-radius: 12px;
         }
 
+        .city-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .city-btn {
+            background: var(--ac-cream);
+            color: var(--ac-brown);
+            border: 2px solid white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .city-btn:active {
+            transform: scale(0.95);
+        }
+
+        .city-btn.active {
+            background: var(--ac-yellow);
+            transform: rotate(-2deg);
+        }
+
         .container {
             padding: 20px;
             max-width: 600px;
@@ -264,7 +291,12 @@
         <p style="color: white; font-weight: bold; margin-top: 20px;">正在觀測雲的流動...</p>
     </div>
     <div class="status-bar">
-        <div class="location-pill">📍 高雄</div>
+        <div id="currentLocation" class="location-pill">📍 高雄</div>
+        <div class="city-selector">
+            <button class="city-btn active" data-city="kaohsiung" onclick="switchCity('kaohsiung')">高雄</button>
+            <button class="city-btn" data-city="changhua" onclick="switchCity('changhua')">彰化</button>
+            <button class="city-btn" data-city="yilan" onclick="switchCity('yilan')">宜蘭</button>
+        </div>
         <div id="updateTime" class="update-pill">更新中...</div>
     </div>
 
@@ -280,7 +312,13 @@
     </div>
 
     <script>
-        const API_URL = "https://weatherall.zeabur.app/";
+        const API_BASE_URL = "https://weatherall.zeabur.app/api/weather/";
+        let currentCity = "kaohsiung";
+        const cityNames = {
+            kaohsiung: "高雄",
+            changhua: "彰化",
+            yilan: "宜蘭"
+        };
 
         function getWeatherIcon(weather) {
             if (!weather) return "🌤️";
@@ -392,13 +430,26 @@
             document.getElementById('updateTime').textContent = `${month}月${date}日 ${days[dayIndex]}`;
         }
 
+        function switchCity(city) {
+            currentCity = city;
+            // 更新按鈕狀態
+            document.querySelectorAll('.city-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-city="${city}"]`).classList.add('active');
+            // 更新位置標籤
+            document.getElementById('currentLocation').textContent = `📍 ${cityNames[city]}`;
+            // 重新抓取天氣
+            fetchWeather();
+        }
+
         async function fetchWeather() {
             try {
                 // 1. 定義「最低等待時間」：1500 毫秒 (1.5秒)
                 const delayPromise = new Promise(resolve => setTimeout(resolve, 1500));
 
                 // 2. 定義「抓取資料」的工作
-                const fetchPromise = fetch(API_URL).then(res => res.json());
+                const fetchPromise = fetch(API_BASE_URL + currentCity).then(res => res.json());
 
                 // 3. Promise.all 會等待「兩個都完成」才會往下走
                 // result 陣列裡，第一個是 delay 的結果(沒用到)，第二個是 api 的 json 資料
