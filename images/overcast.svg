@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="overcastGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#D3D3D3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A9A9A9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- 背景 -->
+  <rect width="200" height="200" fill="#808080"/>
+  <!-- 雲 1 -->
+  <path d="M 40 90 Q 30 75 50 65 Q 60 55 75 60 Q 85 45 100 55 Q 115 45 130 60 Q 150 65 145 85 Q 155 90 150 105 Q 135 115 115 110 Q 95 120 75 115 Q 55 120 40 105 Q 30 100 40 90 Z" fill="url(#overcastGrad)" stroke="#5A5A5A" stroke-width="1.5"/>
+</svg>
