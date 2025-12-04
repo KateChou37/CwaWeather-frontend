@@ -21,7 +21,7 @@
             background-color: #fbe8e9;
             /* 更細緻的斜紋背景 */
             background-image:
-                url(/Gemini_Generated_Image_99s1zh99s1zh99s1.png);
+                url(images/Gemini_Generated_Image_99s1zh99s1zh99s1.png);
             background-size: cover;
             background-repeat: no-repeat;
             min-height: 100vh;
@@ -101,7 +101,8 @@
         /* === 核心：今日焦點卡片 === */
         .hero-card {
             background: var(--ac-cream);
-            background-image: url(/Gemini_Generated_Image_ha99c9ha99c9ha99.png);
+            background-image: url(images/Gemini_Generated_Image_ha99c9ha99c9ha99.png);
+            background-position: 88%;
             border-radius: 35px;
             padding: 30px 25px;
             text-align: center;
